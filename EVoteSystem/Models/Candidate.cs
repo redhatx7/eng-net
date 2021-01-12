@@ -15,6 +15,7 @@ namespace EVoteSystem.Models
         public VoteSession Session { get; set; }
         
         public ICollection<Vote> Votes { get; set; }
-        
+
+        public ICollection<Profile> Profiles { get; set; }
     }
 }

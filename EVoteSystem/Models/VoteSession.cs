@@ -20,15 +20,18 @@ namespace EVoteSystem.Models
 
         [Display(Name = "سال تحصیلی")]
         public string Year { get; set; }
-
-        public ICollection<Candidate> Candidates { get; set; }
-
+        
         [Display(Name = "فعال")] 
         public bool IsActive { get; set; }
 
+        public ICollection<Candidate> Candidates { get; set; }
+        
+        public ICollection<Vote> SessionVotes { get; set; }
+        
         public VoteSession(string description, string year)
         {
             Description = description;
+            Year = year;
             CreatedAt = DateTime.UtcNow;
         }
     }

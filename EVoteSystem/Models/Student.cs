@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace EVoteSystem.Models
 {
-    public enum Grade
+    public enum Grade : short
     {
         [Display(Name = "هفتم")]
         Seventh = 7,
@@ -19,7 +19,6 @@ namespace EVoteSystem.Models
         [Display(Name = "دوازدهم")]
         Twelfth = 12
     }
-    
     public class Student : ApplicationUser
     {
         [Display(Name = "پایه")]

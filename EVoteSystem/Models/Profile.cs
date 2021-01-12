@@ -17,8 +17,9 @@ namespace EVoteSystem.Models
         [Display(Name =  "تصویر پروفایل")]
         public string ProfileImage { get; set; }
         
-        
         [Display(Name = "تاریخ ایجاد")]
         public DateTime CreatedDate { get; set; }
+        
+        public Candidate Candidate { get; set; }
     }
 }

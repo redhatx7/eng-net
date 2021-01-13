@@ -26,7 +26,6 @@ namespace EVoteSystem.Services
                 string time = $"{hh} {mm}";
                 date += " " + time;
             }
-
             return date;
         }
 

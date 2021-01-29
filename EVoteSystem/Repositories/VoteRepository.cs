@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EVoteSystem.Repositories
 {
-    public class VoteRepository : Repository<Vote>, IRepository<Vote>
+    public class VoteRepository : Repository<Vote>, IVoteRepository
     {
         public VoteRepository(EVoteDbContext context) : base(context)
         {
@@ -34,6 +34,13 @@ namespace EVoteSystem.Repositories
             if (id < 0)
                 throw new ArgumentOutOfRangeException($"Vote Id must be greater than zero {typeof(Vote)}");
             return await _context.Set<Vote>().SingleOrDefaultAsync(t => t.VoteId == id);
+        }
+
+        public async Task<IList<Vote>> GetStudentVoteByStudentIdAsync(int? id, int sessionId)
+        {
+            if (id < 0)
+                throw new ArgumentOutOfRangeException($"Student ID Id must be greater than zero {typeof(Vote)}");
+            return await _context.Set<Vote>().Where(t => t.FromStudent.Id == id && t.Session.VoteSessionId == sessionId).ToListAsync();
         }
     }
 }

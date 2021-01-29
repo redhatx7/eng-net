@@ -1,0 +1,39 @@
+@model VoteSession
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+
+<div class="row">
+    <div class="col">
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">افزودن فصل جدید</h3>
+            </div>
+            <!-- /.card-header -->
+            <!-- form start -->
+
+            <div class="card-body">
+                <form class="form-validate form-horizontal" id="feedback_form" asp-action="CreateSession">
+                    <div class="form-group ">
+                        <label asp-for="Description" class="control-label col-lg-2"></label>
+                        <div class="col-lg-10">
+                            <input class="form-control" asp-for="Description" required/>
+                            <span asp-validation-for="Description"></span>
+                        </div>
+                    </div>
+                   
+                </form>
+            </div>
+            <!-- /.card-body -->
+
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary">ارسال</button>
+                <a class="btn btn-default" type="button" asp-action="Index">برگشتن</a>
+            </div>
+
+        </div>
+    </div>
+</div>

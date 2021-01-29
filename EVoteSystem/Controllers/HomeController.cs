@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using EVoteSystem.Models;
+using EVoteSystem.Repositories;
+using EVoteSystem.Services;
 using Microsoft.AspNetCore.Identity;
 
 namespace EVoteSystem.Controllers
@@ -14,27 +16,44 @@ namespace EVoteSystem.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly UserManager<Student> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ISessionRepository _sessionRepository;
+        private readonly ICandidateRepository _candidateRepository;
+        private readonly IStudentRepository _studentRepository;
 
-        public HomeController(ILogger<HomeController> logger, UserManager<Student> userManager)
+        public HomeController(ILogger<HomeController> logger, UserManager<ApplicationUser> userManager,
+            ISessionRepository sessionRepository,
+            ICandidateRepository candidateRepository,
+            IStudentRepository studentRepository)
         {
             _logger = logger;
             _userManager = userManager;
+            _studentRepository = studentRepository;
+            _candidateRepository = candidateRepository;
+            _sessionRepository = sessionRepository;
         }
 
         public async Task<IActionResult> Index()
         {
-            _logger.LogInformation(User.IsInRole("Candidate").ToString());
             if (User.Identity.IsAuthenticated)
             {
-                var claims = User.Claims.ToArray();
+                var user = await _userManager.GetUserAsync(HttpContext.User);
                 
-                foreach (var claim in claims)
+                var roles = await _userManager.GetRolesAsync(user);
+                _logger.LogInformation("-----------------------");
+                foreach (var item in roles)
                 {
-                    _logger.LogInformation($"Claim Type: {claim.Type}, Claim Value: {claim.Value}");    
+                    _logger.LogInformation(item);
                 }
-                
             }
+            return View();
+        }
+
+        public async Task<IActionResult> MainPage()
+        {
+            ViewData["cCount"] = (await _candidateRepository.GetAll()).Count;
+            ViewData["sCount"] = (await _studentRepository.GetAll()).Count;
+            ViewData["oSess"] = (await _sessionRepository.GetActiveSessions()).Count;
             return View();
         }
 

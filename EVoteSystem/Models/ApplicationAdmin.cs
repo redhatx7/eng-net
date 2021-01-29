@@ -9,7 +9,7 @@ namespace EVoteSystem.Models
 
         public ApplicationAdmin()
         {
-            Image = "/wwwroot/images/default-profile.jpg";
+            Image = "/images/default-profile.jpg";
         }
 
         public ApplicationAdmin(string imageUrl)

@@ -11,8 +11,15 @@ namespace EVoteSystem.Services
             string year = $"{pc.GetYear(DateTime.Now).ToString().Substring(2)} {(pc.GetYear(DateTime.Now) + 1).ToString().Substring(2)}";
             return year;
         }
+        
+        public static string GetCurrentYear(this DateTime dt)
+        {
+            PersianCalendar pc = new();
+            string year = $"{pc.GetYear(dt).ToString().Substring(2)} {(pc.GetYear(dt) + 1).ToString().Substring(2)}";
+            return year;
+        }
 
-        public static string DateTimeToPersian(DateTime dt, bool addTime = false)
+        public static string DateTimeToPersian(this DateTime dt, bool addTime = false)
         {
             PersianCalendar pc = new();
             int year = pc.GetYear(dt);

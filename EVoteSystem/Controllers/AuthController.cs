@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using EVoteSystem.Models;
@@ -15,19 +16,20 @@ namespace EVoteSystem.Controllers
     {
         private ILogger<AuthController> _logger;
 
-        private readonly UserManager<Student> _studentUserManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        private readonly SignInManager<Student> _studentSignInManager;
+       
 
-        private readonly SignInManager<ApplicationAdmin> _adminSignInManager;
+        private readonly SignInManager<ApplicationUser> _userSignInManager;
         
         public AuthController(ILogger<AuthController> logger,
-            SignInManager<Student> studentSignInManager,
-            SignInManager<ApplicationAdmin> adminSignInManager)
+            SignInManager<ApplicationUser> userSignInManager,
+            UserManager<ApplicationUser> userManager)
         {
-            _studentSignInManager = studentSignInManager;
-            _adminSignInManager = adminSignInManager;
+            _userSignInManager = userSignInManager;
+            _userManager = userManager;
             _logger = logger;
+            
         }
         
         
@@ -49,77 +51,37 @@ namespace EVoteSystem.Controllers
         {
             if (ModelState.IsValid)
             {
-                switch (login.LoginType)
+                var result =
+                    await _userSignInManager.PasswordSignInAsync(login.Username, login.Password, login.RememberMe,
+                        false);
+                if (result.Succeeded)
                 {
-                    case LoginType.Candidate:
+                    _logger.LogInformation($"User: {login.Username} logged in");
+                    var user = await _userManager.FindByNameAsync(login.Username);
+                    var claims = await _userManager.GetClaimsAsync(user);
+                    if (claims.Any(x => x.Type == "Fullname"))
                     {
-                        var result = await _studentSignInManager.PasswordSignInAsync(login.Username, login.Password,
-                            login.RememberMe, false);
-                        if (result.Succeeded)
-                        {
-                            HttpContext.Response.Cookies.Append("UserType", "Candidate");   
-                            return RedirectToAction("Index", "Candidate");
-                        }
-                        break;
+                        await _userManager.ReplaceClaimAsync(user, claims.First(x => x.Type == "Fullname"),
+                            new Claim("Fullname", user.Fullname));
                     }
-                    case LoginType.Student:
+                    else
                     {
-                        var result = await _studentSignInManager.PasswordSignInAsync(login.Username, login.Password,
-                            login.RememberMe, false);
-                        if (result.Succeeded)
-                        {
-                            HttpContext.Response.Cookies.Append("UserType", "Student");
-                            return RedirectToAction("Index", "Student");
-                        }
-                        break;
+                        await _userManager.AddClaimAsync(user, new Claim("Fullname", user.Fullname));
                     }
-                    case LoginType.Deputy:
-                    {
-                        var result = await _adminSignInManager.PasswordSignInAsync(login.Username, login.Password,
-                            login.RememberMe, false);
-                        if (result.Succeeded)
-                        {
-                            return RedirectToAction("Index", "Deputy");
-                        }
-                        break;
-                    }
-                    case LoginType.HeadMaster:
-                    {
-                        var result = await _adminSignInManager.PasswordSignInAsync(login.Username, login.Password,
-                            login.RememberMe, false);
-                        if (result.Succeeded)
-                        {
-                            return RedirectToAction("Index", "HeadMaster");
-                        }
-                        break;
-                    }
-                    default: 
-                        break;
+                    return RedirectToAction("Index", "Home");
                 }
             }
-            ModelState.AddModelError(null,"خطا، نام‌کاربری یا کلمه‌عبور اشتباه می‌باشد.");
+            _logger.LogInformation("Invalid credential");
+            ModelState.AddModelError("","خطا، نام‌کاربری یا کلمه‌عبور اشتباه می‌باشد.");
             return View();
         }
 
         [HttpGet]
         public async Task<IActionResult> Logout()
         {
-            if (User.IsInRole("HeadMaster") || User.IsInRole("Deputy"))
-            {
-                await _adminSignInManager.SignOutAsync();
-            }
-            else
-            {
-                await _studentSignInManager.SignOutAsync();
-            }
-
+            await _userSignInManager.SignOutAsync();
             return Redirect("/");
         }
-
-
-        private async Task RefreshClaimAsync()
-        {
-            
-        }
+        
     }
 }

@@ -20,6 +20,7 @@ namespace EVoteSystem.Models
         public string Surename { get; set; }
         
         [NotMapped]
+        [Display(Name = "نام و نام‌خانوادگی")]
         public string Fullname => $"{Name} {Surename}";
         
         [Required(ErrorMessage = "کد ملی را وارد کنید.")]
@@ -30,6 +31,9 @@ namespace EVoteSystem.Models
         
         [Display(Name =  "تاریخ تولد")]
         public DateTime Birthday { get; set; }
+
+        
+        public string PersonalImagePath { get; set; }
    
         
     }

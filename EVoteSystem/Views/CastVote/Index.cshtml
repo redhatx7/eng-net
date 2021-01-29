@@ -1,0 +1,56 @@
+@model IList<VoteSession>
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+
+<div class="row">
+    <div class="col">
+
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">انتخاب یکی از فصل های فعال جهت رای‌گیری</h3>
+            </div>
+            <!-- /.card-header -->
+            <!-- form start -->
+
+            <div class="card-body">
+
+                <table class="table table-striped table-advance table-hover">
+                    <tbody>
+                    <tr>
+                        <th><i class="icon_profile"></i> توضیحات</th>
+                        <th><i class="icon_calendar"></i> سال تحصیلی</th>
+                        <th><i class="icon_calendar"></i> وضعیت</th>
+                        <th><i class="icon_pencil-edit"></i> عملیات</th>
+
+                    </tr>
+                    @foreach (var session in Model)
+                    {
+                        <tr>
+                            <td>@session.Description</td>
+                            <td>@session.Year</td>
+                            <td>@session.Status</td>
+                            <td>
+                                @if (session.IsActive)
+                                {
+                                    <a asp-action="CandidateList" asp-route-id="@session.VoteSessionId" class="btn btn-primary">شرکت در رای‌گیری</a>
+                                }
+                                <a asp-action="GetVotedPeople"  asp-route-id="@session.VoteSessionId" class="btn btn-info">مشاهده رای‌ها</a> 
+                            
+                            </td>
+                        </tr>
+                        
+                    }
+
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.card-body -->
+        </div>
+
+
+    </div>
+</div>

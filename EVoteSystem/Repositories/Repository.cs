@@ -23,22 +23,20 @@ namespace EVoteSystem.Repositories
                 throw new ArgumentNullException($"Value is null while inserting {typeof(T)}");
             }
             await _context.Set<T>().AddAsync(val);
-            await _context.SaveChangesAsync();
             return val;
         }
 
-        public async Task<T> Remove(T val)
+        public T Remove(T val)
         {
             if (val == null)
             {
                 throw new ArgumentNullException($"Value is null while removing {typeof(T)}");
             }
             _context.Set<T>().Remove(val);
-            await _context.SaveChangesAsync();
             return val;
         }
 
-        public async Task<T> Update(T val)
+        public T  Update(T val)
         {
             if (val == null)
             {
@@ -46,7 +44,6 @@ namespace EVoteSystem.Repositories
             }
 
             _context.Set<T>().Update(val);
-            await _context.SaveChangesAsync();
             return val;
         }
 
@@ -58,6 +55,11 @@ namespace EVoteSystem.Repositories
         public IQueryable<T> Queryable()
         {
             return _context.Set<T>().AsQueryable();
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
         }
     }
 }

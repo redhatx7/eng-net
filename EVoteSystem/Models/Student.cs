@@ -24,6 +24,13 @@ namespace EVoteSystem.Models
         [Display(Name = "پایه")]
         public Grade Grade { get; set; }
 
+        public ICollection<Candidate> Candidates { get; set; }
+        
         public ICollection<Vote> Votes { get; set; }
+
+        public Student()
+        {
+            PersonalImagePath = "/images/default-profile.jpg";
+        }
     }
 }

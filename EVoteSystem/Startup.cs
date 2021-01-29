@@ -49,6 +49,7 @@ namespace EVoteSystem
 
             services.AddIdentityCore<ApplicationAdmin>()
                 .AddDefaultTokenProviders()
+                .AddRoles<IdentityRole<int>>()
                 .AddSignInManager<SignInManager<ApplicationAdmin>>()
                 .AddEntityFrameworkStores<EVoteDbContext>();
 
@@ -67,24 +68,20 @@ namespace EVoteSystem
                 options.AccessDeniedPath = "/AccessDenied";
                 options.ExpireTimeSpan = TimeSpan.FromDays(15);
             });
-            
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("StudentLogin", policy =>
-                {
-                    policy.RequireUserType(LoggedInUserType.Student);
-                });
-                options.AddPolicy("CandidateLogin", policy =>
-                {
-                    policy.RequireUserType(LoggedInUserType.Candidate);
-                });
-            });
 
+            
             services.AddHttpContextAccessor();
             
             services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
-            services.AddTransient<IAuthorizationHandler, StudentRequirementHandler>();
-            services.AddTransient<IStudentService, StudentService>();
+            services.AddTransient<IStudentRepository, StudentRepository>();
+            services.AddTransient<ICandidateRepository, CandidateRepository>();
+            services.AddTransient<IProfileRepository, ProfileRepository>();
+            services.AddTransient<IVoteRepository, VoteRepository>();
+            services.AddTransient<ISessionRepository, SessionRepository>();
+           
+            
+            services.AddAuthentication();
+            services.AddAuthorization();
             services.AddControllersWithViews()
                 .AddRazorRuntimeCompilation();
             

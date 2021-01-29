@@ -1,0 +1,54 @@
+@using EVoteSystem.Extensions
+@model ICollection<Student>
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">لیست دانش آموزان</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <table class="table table-striped table-advance table-hover">
+                    <tbody>
+                    <tr>
+                        <th>نام </th>
+                        <th> پایه</th>
+                        <th>تاریخ تولد</th>
+                        <th> پست الکترونیک</th>
+                        <th>کد ملی</th>
+                        <th>تصویر</th>
+                        <th>عملیات</th>
+
+                    </tr>
+                    @foreach (var student in Model)
+                    {
+                        <tr>
+                            <td>@student.Fullname</td>
+                            <td>@student.Grade.GetDisplayName()</td>
+                            <td>@student.Birthday.ToShortDateString()</td>
+                            <td>@student.Email</td>
+                            <td>@student.NationalCode</td>
+                            <td>
+                                <img class="img-thumbnail img-size-50" src="@student.PersonalImagePath">
+                            </td>
+                            <td>
+                                <a class="btn btn-info" asp-action="AddCandidate" asp-route-sessionId="@Context.Request.RouteValues["Id"]" asp-route-studentId="@student.Id">اضافه کردن</a>
+                            </td>
+                        </tr>
+                    }
+
+                    </tbody>
+                
+                </table>
+            </div>
+            <!-- /.card-body -->
+        </div>
+    </div>
+</div>

@@ -1,0 +1,56 @@
+@model VoteSession
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+
+<div class="row">
+    <div class="col">
+        <div class="card card-warning">
+            <div class="card-header">
+                <h3 class="card-title">آیا از بستن و انتشار نتایج نظرسنجی مطمئن هستید؟</h3>
+            </div>
+            <!-- /.card-header -->
+            <!-- form start -->
+
+            <div class="card-body">
+                <div class="form">
+                    <form class="form-validate form-horizontal" id="feedback_form" asp-action="CreateSession">
+                        <div class="form-group ">
+                            <label asp-for="Description" class="control-label col-lg-2"></label>
+                            <div class="col-lg-10">
+                                <input class="form-control" asp-for="Description" readonly/>
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label asp-for="Year" class="control-label col-lg-2"></label>
+                            <div class="col-lg-10">
+                                <input class="form-control" asp-for="Year" readonly/>
+                            </div>
+                        </div>
+
+                        <div class="form-group ">
+                            <label asp-for="Description" class="control-label col-lg-2"></label>
+                            <div class="col-lg-10">
+                                <input class="form-control" asp-for="Status" readonly/>
+                            </div>
+                        </div>
+
+
+                       
+                    </form>
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-warning">ارسال</button>
+                    <a class="btn btn-default" type="button" asp-action="Index">برگشت</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>

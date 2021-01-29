@@ -1,0 +1,68 @@
+@model EVoteSystem.ViewModels.StudentRegisterViewModel
+
+@{
+    Layout = "_Layout";
+}
+
+
+<div class="row">
+    <div class="col-md-6">
+        <!-- general form elements -->
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">افزودن دانش‌آموز</h3>
+            </div>
+            <!-- /.card-header -->
+            <!-- form start -->
+            <form asp-action="AddStudent" enctype="multipart/form-data">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label asp-for="Name"></label>
+                        <input class="form-control" asp-for="Name">
+                        <span asp-validation-for="Name"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Surename"></label>
+                        <input class="form-control" asp-for="Surename">
+                        <span asp-validation-for="Name"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Grade"></label>
+                        <select class="form-control" asp-items="@Html.GetEnumSelectList<Grade>()"></select>
+                        <span asp-validation-for="Name"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Username"></label>
+                        <input class="form-control" asp-for="Username">
+                        <span asp-validation-for="Name"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="NationalCode"></label>
+                        <input class="form-control" asp-for="NationalCode">
+                        <span asp-validation-for="NationalCode"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="PersonalImage">ارسال فایل</label>
+                        <div class="input-group">
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" asp-for="PersonalImage">
+                                <label class="custom-file-label" asp-for="PersonalImage">انتخاب فایل</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">ارسال</button>
+                </div>
+            </form>
+        </div>
+
+
+    </div>
+</div>
+
+
+<

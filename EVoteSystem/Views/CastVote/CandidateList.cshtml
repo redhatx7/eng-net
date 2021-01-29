@@ -1,0 +1,80 @@
+@using EVoteSystem.Extensions
+@model ICollection<Candidate>
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+
+<div class="row">
+    <div class="col">
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">لیست کاندید‌ها</h3>
+            </div>
+            <!-- /.card-header -->
+            <!-- form start -->
+
+            <div class="card-body">
+                @{
+                    int i = 0;
+                }
+                <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th scoop="col">ردیف</th>
+                        <th scope="col">نام</th>
+                        <th scope="col">نام خانوادگی</th>
+                        <th scope="col">پایه</th>
+                        <th scope="col">فصل</th>
+                        <th scope="col">پروفایل</th>
+                        <th scope="col">ثبت کاندید</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var candidate in Model)
+                    {
+                        i++;
+                        <tr>
+                            <th scope="row">@i</th>
+                            <td>@candidate.Student.Name</td>
+                            <td>@candidate.Student.Surename</td>
+                            <td>@candidate.Student.Grade.GetDisplayName()</td>
+                            <td>@candidate.Session.Year</td>
+                            <td>
+
+                                <a class="btn btn-success" asp-action="Me" asp-controller="Profile" asp-route-id="@candidate.CandidateId">
+                                    <i class="ion ion-android-add"></i>
+                                </a>
+                            </td>
+                            <td>
+                                <a class="btn btn-success" asp-action="Cast" asp-route-candidateId="@candidate.CandidateId" asp-route-sessionId="@candidate.Session.VoteSessionId">
+                                    <i class="ion ion-android-add"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <th scoop="col">ردیف</th>
+                        <th scope="col">نام</th>
+                        <th scope="col">نام خانوادگی</th>
+                        <th scope="col">پایه</th>
+                        <th scope="col">فصل</th>
+                        <th scope="col">ثبت کاندید</th>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary">ارسال</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+

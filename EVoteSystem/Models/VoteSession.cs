@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
+using EVoteSystem.Services;
 
 namespace EVoteSystem.Models
 {
@@ -18,11 +19,12 @@ namespace EVoteSystem.Models
         [Display(Name = "تاریخ ایجاد")]
         public DateTime CreatedAt { get; set; }
 
-        [Display(Name = "سال تحصیلی")]
-        public string Year { get; set; }
+        public string Year => CreatedAt.GetCurrentYear();
         
         [Display(Name = "فعال")] 
         public bool IsActive { get; set; }
+
+        public string Status => IsActive ? "فعال" : "بسته شده";
 
         public ICollection<Candidate> Candidates { get; set; }
         
@@ -31,7 +33,11 @@ namespace EVoteSystem.Models
         public VoteSession(string description, string year)
         {
             Description = description;
-            Year = year;
+            CreatedAt = DateTime.UtcNow;
+        }
+
+        public VoteSession()
+        {
             CreatedAt = DateTime.UtcNow;
         }
     }

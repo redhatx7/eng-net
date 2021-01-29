@@ -1,0 +1,79 @@
+@model EVoteSystem.Models.Candidate
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <!-- general form elements -->
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">افزودن دانش‌آموز</h3>
+            </div>
+            <!-- /.card-header -->
+            <!-- form start -->
+            <form asp-action="AddCandidate" enctype="multipart/form-data">
+                <div class="form-group ">
+                    <label asp-for="Student.Name" class="control-label col-lg-2"></label>
+                    <div class="col-lg-10">
+                        <input class="form-control" asp-for="Student.Name" readonly/>
+                        <span asp-validation-for="Student.Name"></span>
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <label asp-for="Student.Surename" class="control-label col-lg-2"></label>
+                    <div class="col-lg-10">
+                        <input class="form-control" asp-for="Student.Surename" readonly/>
+                        <span asp-validation-for="Student.Surename"></span>
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <label asp-for="Slogan" class="control-label col-lg-2"></label>
+                    <div class="col-lg-10">
+                        <input class="form-control" asp-for="Slogan" readonly/>
+                        <span asp-validation-for="Slogan"></span>
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <label asp-for="Student.Email" class="control-label col-lg-2"></label>
+                    <div class="col-lg-10">
+                        <input class="form-control" asp-for="Student.Email" readonly/>
+                        <span asp-validation-for="Student.Email"></span>
+                    </div>
+                </div>
+
+                <div class="form-group ">
+                    <label asp-for="Student.Grade" class="control-label col-lg-2"></label>
+                    <div class="col-lg-10">
+                        <select class="form-control" asp-for="Student.Grade" asp-items="@Html.GetEnumSelectList<Grade>()" readonly=""></select>
+                        <span asp-validation-for="Student.Grade"></span>
+                    </div>
+                </div>
+
+                <div class="form-group ">
+                    <label asp-for="Student.NationalCode" class="control-label col-lg-2"></label>
+                    <div class="col-lg-10">
+                        <input class="form-control" asp-for="Student.NationalCode" readonly/>
+                        <span asp-validation-for="Student.NationalCode"></span>
+                    </div>
+                </div>
+
+                <div class="form-group ">
+                    <label asp-for="Student.UserName" class="control-label col-lg-2">نام کاربری</label>
+                    <div class="col-lg-10">
+                        <input class="form-control" asp-for="Student.UserName" readonly/>
+                        <span asp-validation-for="Student.UserName"></span>
+                    </div>
+                </div>
+
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">ثبت</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>

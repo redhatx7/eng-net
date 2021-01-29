@@ -1,0 +1,79 @@
+@using EVoteSystem.Extensions
+@model ICollection<Candidate>
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+
+
+@{
+    int i = 0;
+}
+<div class="row">
+    <div class="col-12">
+
+            <div class="callout callout-info">
+                <a type="button" asp-action="SelectStudent" asp-route-id="@Context.Request.RouteValues["Id"]" class="btn btn-primary">افزودن کاندید جدید</a>
+            </div>
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">لیست دانش آموزان</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th scoop="col">ردیف</th>
+                        <th scope="col">نام</th>
+                        <th scope="col">نام خانوادگی</th>
+                        <th scope="col">پایه</th>
+                        <th scope="col">مشاهده پروفایل</th>
+                        <th scope="col">ثبت کاندید</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var candidate in Model)
+                        {
+                            
+                            <tr>
+                                <th scope="row">@(++i)</th>
+                                <td>@candidate.Student.Name</td>
+                                <td>@candidate.Student.Surename</td>
+                                <td>@candidate.Student.Grade.GetDisplayName()</td>
+                                <td>
+                                    <a asp-action="Me" asp-controller="Profile" asp-route-id="@candidate.CandidateId">
+                                        <button type="button" class="btn btn-primary">
+                                            <i class="ion ion-eye"></i>
+                                        </button>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a asp-action="RemoveCandidate" asp-route-id="@candidate.CandidateId" type="button" class="btn btn-danger">
+                                        <i class="ion ion-android-remove"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <th>ردیف</th>
+                        <th>نام</th>
+                        <th>نام خانوادگی</th>
+                        <th>پایه </th>
+                        <th>مشاهده پروفایل</th>
+                        <th> ثبت کاندید</th>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    </div>
+    <!-- /.col -->
+</div>

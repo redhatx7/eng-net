@@ -1,0 +1,59 @@
+@model IList<VoteSession>
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+<a class="btn btn-primary" style="margin-top: 10px; margin-bottom: 10px;" asp-action="CreateSession">افزودن فصل جدید</a>
+
+<div class="row">
+    <div class="col">
+
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">لیست فصل‌های رای‌گیری</h3>
+            </div>
+            <!-- /.card-header -->
+            <!-- form start -->
+
+            <div class="card-body">
+
+                <table class="table table-striped table-advance table-hover">
+                    <tbody>
+                    <tr>
+                        <th><i class="icon_profile"></i> توضیحات</th>
+                        <th><i class="icon_calendar"></i> سال تحصیلی</th>
+                        <th><i class="icon_calendar"></i> وضعیت</th>
+                        <th><i class="icon_pencil-edit"></i> عملیات</th>
+
+                    </tr>
+                    @foreach (var session in Model)
+                    {
+                        <tr>
+                            <td>@session.Description</td>
+                            <td>@session.Year</td>
+                            <td>@session.Status</td>
+                            <td>
+                                @if (session.IsActive)
+                                {
+                                    <a asp-action="CloseSession" asp-route-id="@session.VoteSessionId" class="btn btn-primary">بستن</a>
+                                }
+                                else
+                                {
+                                    <a asp-action="ShowResult" asp-route-id="@session.VoteSessionId" class="btn btn-danger">نتایج</a>
+                                }
+                                <a asp-action="Index" asp-controller="Candidate" asp-route-id="@session.VoteSessionId" class="btn btn-warning">کاندید‌ها</a>
+                            </td>
+                        </tr>
+                        
+                    }
+
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.card-body -->
+        </div>
+
+
+    </div>
+</div>

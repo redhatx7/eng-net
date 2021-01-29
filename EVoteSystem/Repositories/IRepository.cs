@@ -8,9 +8,10 @@ namespace EVoteSystem.Repositories
     public interface IRepository<T>
     {
         Task<T> Insert(T val);
-        Task<T> Remove(T val);
-        Task<T> Update(T val);
+        T Remove(T val);
+        T Update(T val);
         Task<IList<T>> GetAll();
         IQueryable<T> Queryable();
+        Task SaveChangesAsync();
     }
 }

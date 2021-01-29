@@ -1,0 +1,62 @@
+@using EVoteSystem.Services
+@model Tuple<IList<Vote>,VoteSession>
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<div class="row">
+    <div class="col">
+        <div class="callout callout-info">
+                     
+            مشاهده رای های داده شده برای فصل
+            @Model.Item2.Description
+            @Model.Item2.Year
+                    </div>
+    </div>
+</div>
+
+<div class="card card-primary">
+    <div class="card-header">
+        <h3 class="card-title">مثال ساده</h3>
+    </div>
+    <!-- /.card-header -->
+    <!-- form start -->
+
+    <div class="card-body">
+        <table id="example1" class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th scope="col">شماره رای </th>
+                <th scope="col">نام خانوادگی کاندید</th>
+                <th scope="col">ثبت شده در</th>
+                <th scope="col">عملیات</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var vote in Model.Item1)
+            {
+                <tr>
+                    <td>@vote.VoteId</td>
+                    <td>@vote.ToCandidate.Student.Fullname</td>
+                    <td>@vote.CreatedAt.DateTimeToPersian()</td>
+                    <td>
+                        <a asp-action="RemoveVote" asp-route-id="@vote.VoteId" type="button" class="btn btn-danger">
+                            <i class="ion ion-android-delete"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+           
+           
+        </table>
+    </div>
+    <!-- /.card-body -->
+
+    <div class="card-footer">
+        <button type="submit" class="btn btn-primary">ارسال</button>
+    </div>
+
+</div>

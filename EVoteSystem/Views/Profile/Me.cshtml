@@ -1,0 +1,104 @@
+@using EVoteSystem.Services
+@using EVoteSystem.Extensions
+@model Tuple<Student, IList<Profile>>
+
+@{
+    Layout = "_Layout";
+}
+<div class="row">
+<div class="col-md-3">
+
+    <!-- Profile Image -->
+    <div class="card card-primary card-outline">
+        <div class="card-body box-profile">
+            <div class="text-center">
+                <img class="profile-user-img img-fluid img-circle"
+                     src="@Model.Item1.PersonalImagePath"
+                     alt="User profile picture">
+            </div>
+
+            <h3 class="profile-username text-center">@Model.Item1.Fullname</h3>
+
+            <p class="text-muted text-center">@Model.Item1.Grade.GetDisplayName()</p>
+
+
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+
+    <!-- About Me Box -->
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">درباره من</h3>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+            <strong><i class="fa fa-book mr-1"></i> پایه</strong>
+
+            <p class="text-muted">
+                @Model.Item1.Grade.GetDisplayName()
+            </p>
+
+            <hr>
+
+            <strong><i class="fa fa-map-marker mr-1"></i> تاریخ تولد</strong>
+
+            <p class="text-muted">@Model.Item1.Birthday.DateTimeToPersian()</p>
+            
+            <hr>
+
+            <strong><i class="fa fa-pencil mr-1"></i> شعار</strong>
+
+            <p class="text-muted">
+
+            </p>
+
+            <hr>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+</div>
+<!-- /.col -->
+<div class="col-md-9">
+<div class="card">
+    <div class="card-header p-2">
+        <ul class="nav nav-pills">
+            <li class="nav-item">
+                <a class="nav-link active" href="#activity" data-toggle="tab">فعالیت‌ها</a>
+            </li>
+        </ul>
+    </div><!-- /.card-header -->
+    <div class="card-body">
+        <div class="tab-content">
+            <div class="active tab-pane" id="activity">
+                @foreach (var profile in Model.Item2)
+                {
+                    <div class="post">
+                        <div class="user-block">
+                            <img class="img-circle img-bordered-sm" src="@Model.Item1.PersonalImagePath" alt="user image">
+                            <span class="username">
+                                <a href="#">@Model.Item1.Fullname</a>
+                                <a href="#" class="float-left btn-tool">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                            </span>
+                            <span class="description">ارسال شده در @profile.CreatedDate.DateTimeToPersian()</span>
+                        </div>
+                        <!-- /.user-block -->
+                        <p>
+                            @profile.Description
+                        </p>
+                    </div>
+                }
+            </div>
+            <!-- /.tab-pane -->
+        </div>
+        <!-- /.tab-content -->
+    </div><!-- /.card-body -->
+</div>
+<!-- /.nav-tabs-custom -->
+</div>
+<!-- /.col -->
+</div>

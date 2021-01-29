@@ -1,0 +1,44 @@
+@model Profile
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+
+<div class="row">
+    <div class="col">
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">مثال ساده</h3>
+            </div>
+            <!-- /.card-header -->
+            <!-- form start -->
+
+            <div class="card-body">
+                <form asp-action="AddProfile" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label asp-for="Description"></label>
+                        <input class="form-control" asp-for="Description" readonly>
+                        <span asp-validation-for="Description"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CreatedDate"></label>
+                        <input class="form-control" asp-for="CreatedDate" readonly>
+                        <span asp-validation-for="Description"></span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <img class="img-circle" src="@Model.MediaContentPath"></img>
+                    </div>
+                </form>
+            </div>
+            <!-- /.card-body -->
+
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary">ثبت پروفایل</button>
+            </div>
+
+        </div>
+    </div>
+</div>
